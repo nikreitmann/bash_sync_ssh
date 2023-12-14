@@ -1,4 +1,4 @@
-# sync
+# bash_sync_ssh
 A simple bash script for syncing files over ssh 
  
 ## Description
