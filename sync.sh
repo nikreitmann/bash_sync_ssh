@@ -1,12 +1,14 @@
 #!/bin/bash
-exec > /scripts/logs/log_sync_script.log 2>&1
 
 #____________________CONFIGURE_SCRIPT_____________
 
-#source path (e.g. /your/path/here/ )  -> copies content of folder "here"
+#log file path (e.g. /your/path/here )
+LOGPATH="/scripts/logs"
+
+#source path (e.g. /your/path/here/ )
 SOURCE="/nas/"
 
-#destination path (e.g. /your/path/here ) -> copies to folder "here"
+#destination path (e.g. /your/path/here )
 DEST="/media/"
 
 #remote host and credentials
@@ -18,9 +20,10 @@ PWD="YOUR-SSH-PW-HER"
 ## Rsync options
 #-r = recursive
 #-t = preserve modification date
-#-c = compare checksum
+#-c = compare checksum (slows down the sync)
 #-h = human readable output
 #-e = remote shell
+#-I = --ignore-times don’t skip files that match size and time (slows down the sync)
 #--stats = output a report
 #--delete = delete files in destination wich no longer exists in source
 
@@ -34,6 +37,7 @@ if pgrep rsync > /dev/null; then
 
 else
 
+    exec > $LOGPATH/log_sync_script.log 2>&1
     echo ""
     echo -e $(date)
     echo ""
